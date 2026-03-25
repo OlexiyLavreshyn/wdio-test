@@ -9,7 +9,7 @@ class LoginPage extends BasePage{
     get passwordInput() { return $('#password'); }
     get loginButton()   { return $('#login-button'); }
 
-
+    get errorMessage()  { return $('.error-message-container'); }
 
     async login(username, password) {
         await this.usernameInput.setValue(username);
