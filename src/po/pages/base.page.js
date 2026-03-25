@@ -1,6 +1,6 @@
 class BasePage {
 
-    constructor(url){
+    constructor(url = ''){
         this.url = url;
     }
 
