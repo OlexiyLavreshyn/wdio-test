@@ -15,17 +15,17 @@ class CartPage extends BasePage{
         return $('#checkout');
     }
 
-    async isProductInCart(productName) {
+    async getProductElement(productName) {
         const items = await this.cartItems;
 
         for (const item of items) {
             const text = await item.getText();
             if (text === productName) {
-                return true;
+                return item; // return the element itself
             }
         }
 
-        return false;
+        return null; // if not found
     }
 }
 

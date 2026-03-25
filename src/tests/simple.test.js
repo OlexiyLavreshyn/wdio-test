@@ -23,6 +23,7 @@ const checkoutData = require('../data/checkoutData');
 describe('E2E Flow', () => {
 
     beforeEach(async () => {
+        await browser.reloadSession();
         await loginPage.open();
     })
 
@@ -44,8 +45,8 @@ describe('E2E Flow', () => {
 
 
         //should validate added item present at cart
-        const isPresent = await cartPage.isProductInCart(products.backpack);
-        expect(isPresent).toBe(true);
+        const productEl = await cartPage.getProductElement(products.backpack);
+        await expect(productEl).toBeDisplayed();
 
 
         //should proceed to checkout
@@ -66,7 +67,15 @@ describe('E2E Flow', () => {
         await expect(checkoutComplete.secondheader.title).toHaveText("Checkout: Complete!");
         await expect(checkoutComplete.successMessage).toHaveText("Thank you for your order!");
     });
+});
 
+
+describe('Login Tests (Data Provider)', () => {
+
+    beforeEach(async () => {
+        await browser.reloadSession();
+        await loginPage.open();
+    })
 
     const loginCases = Object.values(users);
 
@@ -85,13 +94,4 @@ describe('E2E Flow', () => {
         });
 
     });
-
-
-    //it('should test login with locked_out_user (should fail with specific error message)', async () => {
-    //    await loginPage.login(users.lockedUser.username, users.lockedUser.password);
-//
-    //    await expect(loginPage.errorMessage).toBeDisplayed();
-//
-    //    await expect(loginPage.errorMessage).toHaveText(users.lockedUser.errorMessage);
-    //});
 });
