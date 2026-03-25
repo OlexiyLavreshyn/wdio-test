@@ -46,6 +46,7 @@ describe('E2E Flow', () => {
 
         //should validate added item present at cart
         const productEl = await cartPage.getProductElement(products.backpack);
+        await expect(productEl).not.toBeNull();
         await expect(productEl).toBeDisplayed();
 
 
