@@ -69,5 +69,5 @@ npm run allure:generate
 ## Only open Allure Report
 
 ```bash
-allure serve allure-results
+npm run allure:open
 ```
