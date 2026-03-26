@@ -1,6 +1,6 @@
 const BasePage = require("./base.page");
-const Header = require("../components/layout/header.component")
-const SecondHeader = require("../components/layout/second_header.component")
+
+const {Header, SecondHeader} = require("../components")
 
 class InventoryPage extends BasePage{
     constructor(){

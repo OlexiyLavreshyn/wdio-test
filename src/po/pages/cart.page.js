@@ -1,5 +1,6 @@
 const BasePage = require("./base.page");
-const SecondHeader = require("../components/layout/second_header.component")
+
+const {SecondHeader} = require("../components")
 
 class CartPage extends BasePage{
     constructor(){
