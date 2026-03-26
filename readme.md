@@ -42,7 +42,9 @@ npm test
 
 ## Run tests
 
+```bash
 npm test
+```
 
 This generates results in:
 
@@ -54,7 +56,9 @@ This generates results in:
 
 ## Generate Allure Report and open it
 
+```bash
 npm run allure:serve
+```
 
 ## Only generate Allure Report
 
