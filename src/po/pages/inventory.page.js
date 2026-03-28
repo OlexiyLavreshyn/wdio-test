@@ -9,20 +9,18 @@ class InventoryPage extends BasePage{
         this.header = new Header();
     }
 
-    async addProductToCart(productName) {
-        // 1. Locate the product name element
-        const productNameDiv = await $(`div.inventory_item_name=${productName}`);
-        
-        // 2. Explicitly wait for it to be present (prevents the 'not a function' error)
-        await productNameDiv.waitForDisplayed();
+    getAddToCartButton(productName) {
+        const formattedName = productName
+            .toLowerCase()
+            .replaceAll(' ', '-');
 
-        // 3. Use the .parentElement() method repeatedly 
-        const itemContainer = await productNameDiv.parentElement().parentElement().parentElement();
-        
-        // 4. Find the button within that container
-        const addButton = await itemContainer.$('button.btn_inventory');
-        
-        await addButton.click();    
+        return $(`[data-test="add-to-cart-${formattedName}"]`);
+    }
+
+    async addProductToCart(productName) {
+        const button = await this.getAddToCartButton(productName);
+        await button.waitForClickable();
+        await button.click();
     }
 }
 
