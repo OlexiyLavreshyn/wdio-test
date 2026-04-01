@@ -13,9 +13,11 @@ describe('E2E Flow', () => {
         await browser.reloadSession();
         await pages("login").open();
     })
+    const productCases = Object.values(products);
 
+productCases.forEach(product => {
 
-    it('should simulate user checkout flow', async () => {
+    it(`should simulate user checkout flow for product ${product}`, async () => {
         allure.addStep('Starting checkout flow');
 
 
@@ -28,9 +30,9 @@ describe('E2E Flow', () => {
 
         
         //should add product to cart and store price
-        const price = await pages("inventory").getPrice(products.bikeLight);
-        await pages("inventory").addProductToCart(products.bikeLight);
-        allure.addStep(`Product "${products.bikeLight}" added to cart`);
+        const price = await pages("inventory").getPrice(product);
+        await pages("inventory").addProductToCart(product);
+        allure.addStep(`Product "${product}" added to cart`);
 
 
         //should open cart
@@ -41,7 +43,7 @@ describe('E2E Flow', () => {
 
 
         //should validate added item present at cart
-        const productEl = await pages("cart").getProductElement(products.bikeLight);
+        const productEl = await pages("cart").getProductElement(product);
         await expect(productEl).not.toBeNull();
         await expect(productEl).toBeDisplayed();
 
@@ -82,6 +84,8 @@ describe('E2E Flow', () => {
 
 
     });
+});
+
 });
 
 
