@@ -1,16 +1,3 @@
-const LoginPage = require("../po/pages/login.page")
-const InventoryPage = require("../po/pages/inventory.page")
-const CartPage = require("../po/pages/cart.page")
-const CheckoutPage = require("../po/pages/checkout.page")
-const CheckoutPageSecond = require("../po/pages/checkout_second.page")
-const CheckoutComplete = require("../po/pages/checkout_complete.page")
-
-//const loginPage = new LoginPage();
-//const inventoryPage = new InventoryPage();
-//const cartPage = new CartPage();
-//const checkoutPage = new CheckoutPage();
-//const checkoutPageSecond = new CheckoutPageSecond();
-//const checkoutComplete = new CheckoutComplete();
 
 const {pages} = require("../po");
 
