@@ -50,9 +50,15 @@ exports.config = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        browserName: 'chrome'
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+            args: ['--headless=new', '--disable-gpu', '--window-size=1920,1080']
+        }
     }, {
-        browserName: 'edge'
+        browserName: 'msedge',
+        'ms:edgeOptions': {
+            args: ['--headless=new', '--disable-gpu', '--window-size=1920,1080']
+        }
     }],
 
     //

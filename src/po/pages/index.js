@@ -5,24 +5,27 @@ const CheckoutPage = require("./checkout.page")
 const CheckoutPageSecond = require("./checkout_second.page")
 const CheckoutComplete = require("./checkout_complete.page")
 
-function pages(name){
-    const items = {
-        login: new LoginPage(),
-        inventory: new InventoryPage(),
-        cart: new CartPage(),
-        checkout: new CheckoutPage(),
-        checkoutsecond: new CheckoutPageSecond(),
-        checkoutcomplete: new CheckoutComplete(),
+const pageClasses = {
+    login: LoginPage,
+    inventory: InventoryPage,
+    cart: CartPage,
+    checkout: CheckoutPage,
+    checkoutsecond: CheckoutPageSecond,
+    checkoutcomplete: CheckoutComplete,
+};
+
+const instances = {};
+
+function pages(name) {
+    const key = name.toLowerCase();
+
+    if (!instances[key]) {
+        instances[key] = new pageClasses[key]();
     }
-    return items[name.toLowerCase()];
+
+    return instances[key];
 }
 
 module.exports = {
-    LoginPage,
-    InventoryPage,
-    CartPage,
-    CheckoutPage,
-    CheckoutPageSecond,
-    CheckoutComplete,
-    pages,
+    pages
 }
