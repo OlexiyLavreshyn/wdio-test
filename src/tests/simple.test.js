@@ -18,6 +18,7 @@ describe('E2E Flow', () => {
     it('should simulate user checkout flow', async () => {
         Logger.info('Starting checkout flow');
 
+
         //should login with valid credentials
         await pages("login").login(users.standardUser.username, users.standardUser.password); // Username and Password
         await expect(pages("inventory").secondheader.title).toHaveText("Products");
@@ -25,9 +26,12 @@ describe('E2E Flow', () => {
      
         Logger.info('Login with standardUser credentials');
 
-        //should add product to cart
+        
+        //should add product to cart and store price
+        const price = await pages("inventory").getPrice(products.backpack);
         await pages("inventory").addProductToCart(products.backpack);
         Logger.info(`Product "${products.backpack}" added to cart`);
+
 
         //should open cart
         await pages("inventory").header.cartButton.click();
@@ -35,11 +39,21 @@ describe('E2E Flow', () => {
         await expect(browser).toHaveUrl(expect.stringContaining("/cart.html"));
         Logger.info('Pressing cart opening button');
 
+
         //should validate added item present at cart
         const productEl = await pages("cart").getProductElement(products.backpack);
         await expect(productEl).not.toBeNull();
         await expect(productEl).toBeDisplayed();
+
+        await expect(pages("cart").shoppingCartBadge).toHaveText('1');
+
+        const items = await pages("cart").cartList;
+        await expect(items).toHaveLength(1);
+
+        await expect(pages("cart").cartPrice).toHaveText(price);
+
         Logger.info('Checking is added item present at cart');
+
 
         //should proceed to checkout
         await pages("cart").checkoutButton.click();
@@ -47,21 +61,26 @@ describe('E2E Flow', () => {
         await expect(browser).toHaveUrl(expect.stringContaining("/checkout-step-one.html"));
         Logger.info('Clicked checkout button');
 
+
         //should fill checkout with data
         await pages("checkout").checkoutFill(checkoutData.test_user_1); // FirstName , LastName , Postal code
         await expect(pages("checkoutSecond").secondheader.title).toHaveText("Checkout: Overview");
         await expect(browser).toHaveUrl(expect.stringContaining("/checkout-step-two.html"));
         Logger.info('Filling checkout with data');
 
+
         //should complete second checkout stage
         await pages("checkoutSecond").finishCheckoutButton.click();
         Logger.info('Clicking finish checkout button');
+
 
         //should validate the success
         await expect(pages("checkoutComplete").secondheader.title).toHaveText("Checkout: Complete!");
         await expect(browser).toHaveUrl(expect.stringContaining("/checkout-complete.html"));
         await expect(pages("checkoutComplete").successMessage).toHaveText("Thank you for your order!");
         Logger.info('Validating success of checkout');
+
+
     });
 });
 

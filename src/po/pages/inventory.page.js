@@ -9,11 +9,13 @@ class InventoryPage extends BasePage{
         this.header = new Header();
     }
 
-    getAddToCartButton(productName) {
-        const formattedName = productName
-            .toLowerCase()
-            .replaceAll(' ', '-');
+    getFormattedName(productName) {
+        const formattedName = productName.toLowerCase().replaceAll(' ', '-');
+        return formattedName;
+    }
 
+    getAddToCartButton(productName) {
+        const formattedName = this.getFormattedName(productName);
         return $(`[data-test="add-to-cart-${formattedName}"]`);
     }
 
@@ -21,6 +23,14 @@ class InventoryPage extends BasePage{
         const button = await this.getAddToCartButton(productName);
         await button.waitForClickable();
         await button.click();
+    }
+
+    async getPrice(productName){
+        const button = await this.getAddToCartButton(productName);
+        const priceElement = await button.parentElement().$('.inventory_item_price');
+        const priceText = await priceElement.getText();
+
+        return priceText;
     }
 }
 

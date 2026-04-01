@@ -16,6 +16,18 @@ class CartPage extends BasePage{
         return $('#checkout');
     }
 
+    get shoppingCartBadge() {
+        return $('.shopping_cart_badge');
+    }
+
+    get cartList() {
+        return $$('.cart_list');
+    }
+
+    get cartPrice() {
+        return $('.inventory_item_price');
+    }
+
     async getProductElement(productName) {
         const items = await this.cartItems;
 
