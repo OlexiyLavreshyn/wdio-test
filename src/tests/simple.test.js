@@ -1,6 +1,13 @@
 const winston = require('winston');
 
-const {loginPage, inventoryPage, cartPage, checkoutPage, checkoutPageSecond, checkoutComplete} = require("../po/pages/index");
+const {LoginPage, InventoryPage, CartPage, CheckoutPage, CheckoutPageSecond, CheckoutComplete} = require("../po/pages/index");
+
+const loginPage = new LoginPage();
+const inventoryPage = new InventoryPage();
+const cartPage = new CartPage();
+const checkoutPage = new CheckoutPage();
+const checkoutPageSecond = new CheckoutPageSecond();
+const checkoutComplete = new CheckoutComplete();
 
 const users = require('../data/users');
 const products = require('../data/products');

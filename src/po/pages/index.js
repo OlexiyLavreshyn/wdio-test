@@ -6,10 +6,10 @@ const CheckoutPageSecond = require("./checkout_second.page")
 const CheckoutComplete = require("./checkout_complete.page")
 
 module.exports = {
-    loginPage: new LoginPage(),
-    inventoryPage: new InventoryPage(),
-    cartPage: new CartPage(),
-    checkoutPage: new CheckoutPage(),
-    checkoutPageSecond: new CheckoutPageSecond(),
-    checkoutComplete: new CheckoutComplete(),
+    LoginPage,
+    InventoryPage,
+    CartPage,
+    CheckoutPage,
+    CheckoutPageSecond,
+    CheckoutComplete,
 }
