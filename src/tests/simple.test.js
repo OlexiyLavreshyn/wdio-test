@@ -1,11 +1,18 @@
-const allure = require('@wdio/allure-reporter').default;
+const winston = require('winston');
+
 const {pages} = require("../po");
 
 const users = require('../data/users');
 const products = require('../data/products');
 const checkoutData = require('../data/checkoutData');
 
-//const Logger = require('../utils/logger');
+const logger = winston.createLogger({
+  level: 'info',
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'combined.log' }),
+  ],
+});
 
 describe('E2E Flow', () => {
 
@@ -18,7 +25,7 @@ describe('E2E Flow', () => {
 productCases.forEach(product => {
 
     it(`should simulate user checkout flow for product ${product}`, async () => {
-        allure.addStep('Starting checkout flow');
+        logger.info('Starting checkout flow');
 
 
         //should login with valid credentials
@@ -26,20 +33,20 @@ productCases.forEach(product => {
         await expect(pages("inventory").secondheader.title).toHaveText("Products");
         await expect(browser).toHaveUrl(expect.stringContaining("/inventory.html"));
      
-        allure.addStep('Login with standardUser credentials');
+        logger.info('Login with standardUser credentials');
 
         
         //should add product to cart and store price
         const price = await pages("inventory").getPrice(product);
         await pages("inventory").addProductToCart(product);
-        allure.addStep(`Product "${product}" added to cart`);
+        logger.info(`Product "${product}" added to cart`);
 
 
         //should open cart
         await pages("inventory").header.cartButton.click();
         await expect(pages("cart").secondheader.title).toHaveText("Your Cart");
         await expect(browser).toHaveUrl(expect.stringContaining("/cart.html"));
-        allure.addStep('Pressing cart opening button');
+        logger.info('Pressing cart opening button');
 
 
         //should validate added item present at cart
@@ -54,33 +61,33 @@ productCases.forEach(product => {
 
         await expect(pages("cart").cartPrice).toHaveText(price);
 
-        allure.addStep('Checking is added item present at cart');
+        logger.info('Checking is added item present at cart');
 
 
         //should proceed to checkout
         await pages("cart").checkoutButton.click();
         await expect(pages("checkout").secondheader.title).toHaveText("Checkout: Your Information");
         await expect(browser).toHaveUrl(expect.stringContaining("/checkout-step-one.html"));
-        allure.addStep('Clicked checkout button');
+        logger.info('Clicked checkout button');
 
 
         //should fill checkout with data
         await pages("checkout").checkoutFill(checkoutData.test_user_1); // FirstName , LastName , Postal code
         await expect(pages("checkoutSecond").secondheader.title).toHaveText("Checkout: Overview");
         await expect(browser).toHaveUrl(expect.stringContaining("/checkout-step-two.html"));
-        allure.addStep('Filling checkout with data');
+        logger.info('Filling checkout with data');
 
 
         //should complete second checkout stage
         await pages("checkoutSecond").finishCheckoutButton.click();
-        allure.addStep('Clicking finish checkout button');
+        logger.info('Clicking finish checkout button');
 
 
         //should validate the success
         await expect(pages("checkoutComplete").secondheader.title).toHaveText("Checkout: Complete!");
         await expect(browser).toHaveUrl(expect.stringContaining("/checkout-complete.html"));
         await expect(pages("checkoutComplete").successMessage).toHaveText("Thank you for your order!");
-        allure.addStep('Validating success of checkout');
+        logger.info('Validating success of checkout');
 
 
     });
