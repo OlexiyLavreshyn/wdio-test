@@ -1,6 +1,6 @@
 const winston = require('winston');
 
-const {pages} = require("../po");
+const {loginPage, inventoryPage, cartPage, checkoutPage, checkoutPageSecond, checkoutComplete} = require("../po/pages/index");
 
 const users = require('../data/users');
 const products = require('../data/products');
@@ -18,9 +18,10 @@ describe('E2E Flow', () => {
 
     beforeEach(async () => {
         await browser.reloadSession();
-        await pages("login").open();
+        await loginPage.open();
     })
-    const productCases = Object.values(products);
+
+const productCases = Object.values(products);
 
 productCases.forEach(product => {
 
@@ -29,64 +30,65 @@ productCases.forEach(product => {
 
 
         //should login with valid credentials
-        await pages("login").login(users.standardUser.username, users.standardUser.password); // Username and Password
-        await expect(pages("inventory").secondheader.title).toHaveText("Products");
+        await loginPage.login(users.standardUser.username, users.standardUser.password); // Username and Password
+        await expect(inventoryPage.secondheader.title).toHaveText("Products");
         await expect(browser).toHaveUrl(expect.stringContaining("/inventory.html"));
      
         logger.info('Login with standardUser credentials');
 
         
         //should add product to cart and store price
-        const price = await pages("inventory").getPrice(product);
-        await pages("inventory").addProductToCart(product);
+        const price = await inventoryPage.getPrice(product);
+        await inventoryPage.addProductToCart(product);
         logger.info(`Product "${product}" added to cart`);
 
+        //checking is cart icon has number 1
+        await expect(cartPage.shoppingCartBadge).toHaveText('1');
+        logger.info('Cart badge is number 1');
 
         //should open cart
-        await pages("inventory").header.cartButton.click();
-        await expect(pages("cart").secondheader.title).toHaveText("Your Cart");
+        await inventoryPage.header.cartButton.click();
+        await expect(cartPage.secondheader.title).toHaveText("Your Cart");
         await expect(browser).toHaveUrl(expect.stringContaining("/cart.html"));
         logger.info('Pressing cart opening button');
 
 
         //should validate added item present at cart
-        const productEl = await pages("cart").getProductElement(product);
+        const productEl = await cartPage.getProductElement(product);
         await expect(productEl).not.toBeNull();
         await expect(productEl).toBeDisplayed();
 
-        await expect(pages("cart").shoppingCartBadge).toHaveText('1');
-
-        const items = await pages("cart").cartList;
+        const items = await cartPage.cartList;
         await expect(items).toHaveLength(1);
 
-        await expect(pages("cart").cartPrice).toHaveText(price);
+        await expect(cartPage.cartPrice).toHaveText(price);
 
         logger.info('Checking is added item present at cart');
 
 
         //should proceed to checkout
-        await pages("cart").checkoutButton.click();
-        await expect(pages("checkout").secondheader.title).toHaveText("Checkout: Your Information");
+        await cartPage.checkoutButton.click();
+        await expect(checkoutPage.secondheader.title).toHaveText("Checkout: Your Information");
         await expect(browser).toHaveUrl(expect.stringContaining("/checkout-step-one.html"));
         logger.info('Clicked checkout button');
 
 
         //should fill checkout with data
-        await pages("checkout").checkoutFill(checkoutData.test_user_1); // FirstName , LastName , Postal code
-        await expect(pages("checkoutSecond").secondheader.title).toHaveText("Checkout: Overview");
+        await checkoutPage.checkoutFill(checkoutData.test_user_1); // FirstName , LastName , Postal code
+        await expect(checkoutPageSecond.secondheader.title).toHaveText("Checkout: Overview");
         await expect(browser).toHaveUrl(expect.stringContaining("/checkout-step-two.html"));
         logger.info('Filling checkout with data');
 
 
         //should complete second checkout stage
-        await pages("checkoutSecond").finishCheckoutButton.click();
+        await checkoutPageSecond.finishCheckoutButton.click();
         logger.info('Clicking finish checkout button');
 
 
         //should validate the success
-        await expect(pages("checkoutComplete").secondheader.title).toHaveText("Checkout: Complete!");
+        await expect(checkoutComplete.secondheader.title).toHaveText("Checkout: Complete!");
         await expect(browser).toHaveUrl(expect.stringContaining("/checkout-complete.html"));
-        await expect(pages("checkoutComplete").successMessage).toHaveText("Thank you for your order!");
+        await expect(checkoutComplete.successMessage).toHaveText("Thank you for your order!");
         logger.info('Validating success of checkout');
 
 
@@ -100,7 +102,7 @@ describe('Login Tests (Data Provider)', () => {
 
     beforeEach(async () => {
         await browser.reloadSession();
-        await pages("login").open();
+        await loginPage.open();
     })
 
     const loginCases = Object.values(users);
@@ -109,13 +111,13 @@ describe('Login Tests (Data Provider)', () => {
 
         it(`should login as ${user.username}`, async () => {
 
-            await pages("login").login(user.username, user.password);
+            await loginPage.login(user.username, user.password);
 
             if (user.errorMessage) {
-                await expect(pages("login").errorMessage).toHaveText(user.errorMessage);
+                await expect(loginPage.errorMessage).toHaveText(user.errorMessage);
             } 
             else {
-                await expect(pages("inventory").secondheader.title).toHaveText('Products');
+                await expect(inventoryPage.secondheader.title).toHaveText('Products');
                 await expect(browser).toHaveUrl(expect.stringContaining("/inventory.html"));
             }
         });
