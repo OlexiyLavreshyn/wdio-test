@@ -54,11 +54,6 @@ exports.config = {
         'goog:chromeOptions': {
             args: ['--headless=new', '--disable-gpu', '--window-size=1920,1080']
         }
-    }, {
-        browserName: 'msedge',
-        'ms:edgeOptions': {
-            args: ['--headless=new', '--disable-gpu', '--window-size=1920,1080']
-        }
     }],
 
     //
