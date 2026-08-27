@@ -1,13 +1,11 @@
 class BasePage {
-
-    constructor(url = ''){
+    constructor(url = '') {
         this.url = url;
     }
 
-    open(){
+    open() {
         return browser.url(this.url);
     }
-
 }
 
 module.exports = BasePage;

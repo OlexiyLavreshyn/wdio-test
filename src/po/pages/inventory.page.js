@@ -1,10 +1,10 @@
-const BasePage = require("./base.page");
+const BasePage = require('./base.page');
 
-const {Header, SecondHeader} = require("../components")
+const { Header, SecondHeader } = require('../components');
 
-class InventoryPage extends BasePage{
-    constructor(){
-        super("/inventory.html");
+class InventoryPage extends BasePage {
+    constructor() {
+        super('/inventory.html');
         this.secondheader = new SecondHeader();
         this.header = new Header();
     }
@@ -25,7 +25,7 @@ class InventoryPage extends BasePage{
         await button.click();
     }
 
-    async getPrice(productName){
+    async getPrice(productName) {
         const button = await this.getAddToCartButton(productName);
         const priceElement = await button.parentElement().$('.inventory_item_price');
         const priceText = await priceElement.getText();

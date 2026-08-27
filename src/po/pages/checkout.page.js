@@ -1,17 +1,25 @@
-const BasePage = require("./base.page");
+const BasePage = require('./base.page');
 
-const {SecondHeader} = require("../components")
+const { SecondHeader } = require('../components');
 
-class CheckoutPage extends BasePage{
-    constructor(){
-        super("/checkout-step-one.html");
-        this.secondheader = new SecondHeader();  
+class CheckoutPage extends BasePage {
+    constructor() {
+        super('/checkout-step-one.html');
+        this.secondheader = new SecondHeader();
     }
 
-    get firstnameInput() { return $('#first-name'); }
-    get lastnameInput() { return $('#last-name'); }
-    get postalcodeInput()   { return $('#postal-code'); }
-    get continueButton()   { return $('#continue'); }
+    get firstnameInput() {
+        return $('#first-name');
+    }
+    get lastnameInput() {
+        return $('#last-name');
+    }
+    get postalcodeInput() {
+        return $('#postal-code');
+    }
+    get continueButton() {
+        return $('#continue');
+    }
 
     async checkoutFill({ firstName, lastName, postalCode }) {
         await this.firstnameInput.setValue(firstName);

@@ -1,10 +1,9 @@
-class BaseComponent{
-
-    constructor(root){
+class BaseComponent {
+    constructor(root) {
         this.root = root;
     }
 
-    get rootEl(){
+    get rootEl() {
         return $(this.root);
     }
 }

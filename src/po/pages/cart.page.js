@@ -1,10 +1,10 @@
-const BasePage = require("./base.page");
+const BasePage = require('./base.page');
 
-const {SecondHeader} = require("../components")
+const { SecondHeader } = require('../components');
 
-class CartPage extends BasePage{
-    constructor(){
-        super("/cart.html");
+class CartPage extends BasePage {
+    constructor() {
+        super('/cart.html');
         this.secondheader = new SecondHeader();
     }
 

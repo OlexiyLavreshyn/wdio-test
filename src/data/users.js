@@ -1,12 +1,12 @@
 module.exports = {
     standardUser: {
         username: 'standard_user',
-        password: 'secret_sauce'
+        password: 'secret_sauce',
     },
 
     lockedUser: {
         username: 'locked_out_user',
         password: 'secret_sauce',
-        errorMessage: 'Epic sadface: Sorry, this user has been locked out.'
-    }
+        errorMessage: 'Epic sadface: Sorry, this user has been locked out.',
+    },
 };

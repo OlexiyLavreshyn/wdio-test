@@ -4,5 +4,5 @@ module.exports = {
     tshirt: 'Sauce Labs Bolt T-Shirt',
     jacket: 'Sauce Labs Fleece Jacket',
     onesie: 'Sauce Labs Onesie',
-    tshirt_red: 'Test.allTheThings() T-Shirt (Red)'
+    tshirt_red: 'Test.allTheThings() T-Shirt (Red)',
 };

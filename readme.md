@@ -4,18 +4,17 @@
 
 This project is an automated UI test framework built with:
 
-* **WebdriverIO**
-* **Mocha**
-* **Allure Reporter**
-* **Page Object Model (POM) architecture**
+- **WebdriverIO**
+- **Mocha**
+- **Allure Reporter**
+- **Page Object Model (POM) architecture**
 
 The framework supports:
 
-* Parallel execution
-* Multiple browsers (Chrome, Edge)
-* Allure reporting
-* Clean component-based Page Object structure
-
+- Parallel execution
+- Multiple browsers (Chrome, Edge)
+- Allure reporting
+- Clean component-based Page Object structure
 
 ---
 
@@ -32,6 +31,7 @@ npm install
 # 🚀 Running Tests
 
 ## Run all tests
+
 ```bash
 npm test
 ```

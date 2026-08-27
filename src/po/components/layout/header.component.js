@@ -1,12 +1,11 @@
-const BaseComponent = require("../common/base.component");
+const BaseComponent = require('../common/base.component');
 
-class Header extends BaseComponent{
-
-    constructor(){
-        super(".primary_header");
+class Header extends BaseComponent {
+    constructor() {
+        super('.primary_header');
     }
 
-    get cartButton(){
+    get cartButton() {
         return this.rootEl.$('#shopping_cart_container');
     }
 }
